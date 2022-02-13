@@ -1,15 +1,18 @@
-import React, { Component } from "react";
-import Particles from "react-tsparticles";
-import Clarifai from "clarifai";
-import Navigation from "./components/Navigation/Navigation";
-import Logo from "./components/Logo/Logo";
-import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
-import Rank from "./components/Rank/Rank";
-import "./App.css";
+import React, { Component } from 'react'
+import Particles from 'react-tsparticles'
+import Clarifai from 'clarifai'
+import Navigation from './components/Navigation/Navigation'
+import FaceRecognition from './components/FaceRecognition/FaceRecognition'
+import Logo from './components/Logo/Logo'
+import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
+import Rank from './components/Rank/Rank'
+import './App.css'
+
+// console.log(Clarifai)
 
 const app = new Clarifai.App({
-  apiKey: "222d66483825430fa1f021cfcd3d2432",
-});
+  apiKey: '222d66483825430fa1f021cfcd3d2432',
+})
 
 const particlesOptions = {
   particles: {
@@ -22,36 +25,34 @@ const particlesOptions = {
       enable: true,
     },
   },
-};
+}
 
 class App extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
-      input: "",
-    };
+      input: '',
+      imageUrl: '',
+    }
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value);
-  };
+    this.setState({ input: event.target.value })
+  }
 
   onButtonSubmit = () => {
-    console.log("click");
-    app.models
-      .predict(
-        "45fb9a671625463fa646c3523a3087d5",
-        "https://samples.clarifai.com/metro-north.jpg"
-      )
-      .then(
-        function (response) {
-          console.log(response);
-        },
-        function (err) {
-          //
-        }
-      );
-  };
+    this.setState({ imageUrl: this.state.input })
+    app.models.predict(Clarifai.FACE_DETECT_MODEL, this.state.input).then(
+      function (response) {
+        console.log(
+          response.outputs[0].data.regions[0].region_info.bounding_box
+        )
+      },
+      function (err) {
+        //
+      }
+    )
+  }
 
   render() {
     return (
@@ -65,10 +66,10 @@ class App extends Component {
           onButtonSubmit={this.onButtonSubmit}
         />
 
-        {/*<FaceRecognition />*/}
+        <FaceRecognition imageUrl={this.state.imageUrl} />
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
