@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Particles from 'react-tsparticles'
 import Clarifai from 'clarifai'
 import Navigation from './components/Navigation/Navigation'
+import SignIn from './components/SignIn/SignIn'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
@@ -37,17 +38,16 @@ class App extends Component {
     }
   }
 
-  calculateFaceLocation = (data) => {
-    const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box
-    const image = document.getElementById('inputImage')
-    const width = Number(image.width)
-    const height = Number(image.height)
+  calculateFaceLocation = (data, i) => {
+    let clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
+    let image = document.getElementById('inputimage')
+    let width = Number(image.width)
+    let height = Number(image.height)
     return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height,
+      leftcol: clarifaiFace.left_col * width,
+      toprow: clarifaiFace.top_row * height,
+      rightcol: width - clarifaiFace.right_col * width,
+      bottomrow: height - clarifaiFace.bottom_row * height,
     }
   }
 
@@ -61,12 +61,14 @@ class App extends Component {
   }
 
   onButtonSubmit = () => {
-    this.setState({ imageUrl: this.state.input })
+    this.setState({
+      imageUrl: this.state.input,
+    })
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
-      .then((response) =>
+      .then((response) => {
         this.displayFaceBox(this.calculateFaceLocation(response))
-      )
+      })
       .catch((err) => console.log(err))
   }
 
@@ -75,6 +77,7 @@ class App extends Component {
       <div className="App">
         <Particles id="particles" params={particlesOptions} />
         <Navigation />
+        <SignIn />
         <Logo />
         <Rank />
         <ImageLinkForm
@@ -82,7 +85,7 @@ class App extends Component {
           onButtonSubmit={this.onButtonSubmit}
         />
 
-        <FaceRecognition imageUrl={this.state.imageUrl} />
+        <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl} />
       </div>
     )
   }
