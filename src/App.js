@@ -1,39 +1,20 @@
 import React, { Component } from 'react'
-import Particles from 'react-tsparticles'
-import Clarifai from 'clarifai'
+// import Particles from 'react-tsparticles'
 import Navigation from './components/Navigation/Navigation'
 import SignIn from './components/SignIn/SignIn'
 import Register from './components/Register/Register'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
+import ParticleBackground from './ParticleBackground'
 import Rank from './components/Rank/Rank'
 import './App.css'
-// import { response } from 'express'
-
-// console.log(Clarifai)
-
-const app = new Clarifai.App({
-  apiKey: '222d66483825430fa1f021cfcd3d2432',
-})
-
-const particlesOptions = {
-  particles: {
-    value: 30,
-    density: {
-      enable: true,
-      value_area: 1000,
-    },
-    move: {
-      enable: true,
-    },
-  },
-}
+import particlesConfig from './particle-config'
 
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  box: [],
   route: 'signin',
   isSignedIn: false,
   user: {
@@ -93,9 +74,17 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({
       imageUrl: this.state.input,
+      box: [],
+      showImage: true,
     })
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        input: this.state.input,
+      }),
+    })
+      .then((response) => response.json())
       .then((response) => {
         if (response) {
           fetch('http://localhost:3000/image', {
@@ -113,12 +102,12 @@ class App extends Component {
         }
         this.displayFaceBox(this.calculateFaceLocation(response))
       })
-      .catch((err) => console.log(err))
+      .catch(console.log)
   }
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState(initialState) //not work
+      this.setState(initialState) //notwork
     } else if (route === 'home') {
       this.setState({ isSignedIn: true })
     }
@@ -129,7 +118,7 @@ class App extends Component {
     const { isSignedIn, imageUrl, route, box } = this.state
     return (
       <div className="App">
-        <Particles id="particles" params={particlesOptions} />
+        <ParticleBackground params={particlesConfig} />
         <Navigation
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
