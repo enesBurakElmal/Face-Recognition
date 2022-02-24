@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import Particles from 'react-tsparticles'
 import Navigation from './components/Navigation/Navigation'
 import SignIn from './components/SignIn/SignIn'
 import Register from './components/Register/Register'
@@ -77,7 +76,7 @@ class App extends Component {
       box: [],
       showImage: true,
     })
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://damp-sands-77077.herokuapp.com/imageurl', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -87,7 +86,7 @@ class App extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://damp-sands-77077.herokuapp.com/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

@@ -1,7 +1,7 @@
 const particlesConfig = {
   particles: {
     number: {
-      value: 43,
+      value: 30,
       density: {
         enable: true,
         value_area: 946.9771699587272,
@@ -49,12 +49,12 @@ const particlesConfig = {
       enable: true,
       distance: 150,
       color: '#ffffff',
-      opacity: 0.4,
+      opacity: 0.2,
       width: 1,
     },
     move: {
       enable: true,
-      speed: 6,
+      speed: 4,
       direction: 'none',
       random: false,
       straight: false,
@@ -63,7 +63,7 @@ const particlesConfig = {
       attract: {
         enable: false,
         rotateX: 600,
-        rotateY: 1200,
+        rotateY: 900,
       },
     },
   },
@@ -72,15 +72,15 @@ const particlesConfig = {
       grab: {
         distance: 400,
         line_linked: {
-          opacity: 1,
+          opacity: 0.2,
         },
       },
       bubble: {
         distance: 400,
         size: 40,
         duration: 2,
-        opacity: 8,
-        speed: 3,
+        opacity: 3,
+        speed: 1,
       },
       repulse: {
         distance: 200,
