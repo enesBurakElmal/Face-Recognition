@@ -44,7 +44,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/')
+    fetch('https://damp-sands-77077.herokuapp.com/')
       .then((response) => response.json())
       .then(console.log)
   }
