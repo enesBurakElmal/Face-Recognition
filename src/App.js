@@ -11,6 +11,7 @@ import './App.css'
 import particlesConfig from './particle-config'
 
 const initialState = {
+  //not work, bug here
   input: '',
   imageUrl: '',
   box: [],
