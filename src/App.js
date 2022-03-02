@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://damp-sands-77077.herokuapp.com/')
+    fetch('http://smartbrainv1.herokuapp.com/')
       .then((response) => response.json())
       .then(console.log)
   }
@@ -77,7 +77,7 @@ class App extends Component {
       box: [],
       showImage: true,
     })
-    fetch('https://damp-sands-77077.herokuapp.com/imageurl', {
+    fetch('http://smartbrainv1.herokuapp.com/imageurl', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -87,7 +87,7 @@ class App extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response) {
-          fetch('https://damp-sands-77077.herokuapp.com/image', {
+          fetch('http://smartbrainv1.herokuapp.com/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
