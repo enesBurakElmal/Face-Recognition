@@ -44,12 +44,6 @@ class App extends Component {
     })
   }
 
-  componentDidMount() {
-    fetch('https://damp-sands-77077.herokuapp.com/')
-      .then((response) => response.json())
-      .then(console.log)
-  }
-
   calculateFaceLocation = (data, i) => {
     let clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box
     let image = document.getElementById('inputimage')
