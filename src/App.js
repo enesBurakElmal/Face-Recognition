@@ -71,7 +71,7 @@ class App extends Component {
       box: [],
       showImage: true,
     })
-    fetch('https://damp-sands-77077.herokuapp.com/imageurl', {
+    fetch('https://face-recog-api.netlify.app/imageurl', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -81,7 +81,7 @@ class App extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response) {
-          fetch('https://damp-sands-77077.herokuapp.com/image', {
+          fetch('https://face-recog-api.netlify.app/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
